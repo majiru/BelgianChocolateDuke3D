@@ -2859,7 +2859,7 @@ void drawrooms(int32_t daposx, int32_t daposy, int32_t daposz,short daang, int32
             for(; i<windowx2+1+(stereopixelwidth<<1); i++) {
                 startumost[i] = windowy1, startdmost[i] = windowy2+1;
             }
-            viewoffset = windowy1*bytesperline+windowx1-(stereopixelwidth<<1);
+            viewoffset = windowy1*dukebytesperline+windowx1-(stereopixelwidth<<1);
             i = stereowidth;
         }
         else
@@ -2870,7 +2870,7 @@ void drawrooms(int32_t daposx, int32_t daposy, int32_t daposz,short daang, int32
             for(; i<windowx2+1+(stereopixelwidth<<1); i++) {
                 startumost[i] = 1, startdmost[i] = 0;
             }
-            viewoffset = windowy1*bytesperline+windowx1;
+            viewoffset = windowy1*dukebytesperline+windowx1;
             i = -stereowidth;
         }
         globalposx += mulscale24(singlobalang,i);
@@ -7384,7 +7384,7 @@ void rotatepoint(int32_t xpivot, int32_t ypivot, int32_t x, int32_t y, short daa
 }
 
 
-int initmouse(void)
+int dukeinitmouse(void)
 {
     return(moustat = setupmouse());
 }
@@ -7985,7 +7985,7 @@ void setview(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
         startumost[i] = 1, startdmost[i] = 0;
     }
 
-    viewoffset = windowy1*bytesperline + windowx1;
+    viewoffset = windowy1*dukebytesperline + windowx1;
 
     if (stereomode)
     {
@@ -9053,8 +9053,8 @@ void setviewback(void)
     else
         k = max(bakxsiz[setviewcnt-1],bakxsiz[setviewcnt]);
     j = 0;
-    for(i=0; i<=k; i++) ylookup[i] = j, j += bytesperline;
-    setBytesPerLine(bytesperline);
+    for(i=0; i<=k; i++) ylookup[i] = j, j += dukebytesperline;
+    setBytesPerLine(dukebytesperline);
 }
 
 

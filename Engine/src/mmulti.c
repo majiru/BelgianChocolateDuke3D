@@ -1551,6 +1551,7 @@ static gcomtype *init_network_transport(char **ARGV, int argpos)
 static void deinit_network_transport(gcomtype *gcom)
 {
     printf("UDP NETWORK TRANSPORT DEINITIALIZING...\n");
+#ifndef __plan9__
 
     if (gcom != NULL)
     {
@@ -1566,6 +1567,7 @@ static void deinit_network_transport(gcomtype *gcom)
         socketclose(udpsocket);
         udpsocket = -1;
     }
+#endif
 
     deinitialize_sockets();
 

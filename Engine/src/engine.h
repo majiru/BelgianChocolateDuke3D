@@ -35,7 +35,7 @@ void faketimerhandler(void);
  *  See build.txt, build2.txt...and anything else with a .txt extention for
  *  information on using these functions that may or may not be accurate. :)
  */
-int initmouse(void);
+int dukeinitmouse(void);
 int setgamemode(int32_t daxdim, int32_t daydim);
 int getceilzofslope(int16_t sectnum, int32_t dax, int32_t day);
 int getflorzofslope(int16_t sectnum, int32_t dax, int32_t day);

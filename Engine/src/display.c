@@ -53,7 +53,7 @@
 
 
 	/* !!! move these elsewhere? */
-int32_t xres, yres, bytesperline, imageSize, maxpages;
+int32_t xres, yres, dukebytesperline, imageSize, maxpages;
 uint8_t* frameplace;
 
 //The frambuffer address
@@ -112,7 +112,7 @@ static void init_new_res_vars(void)
 	printf("init_new_res_vars %d %d\n", xdim, ydim);
 
 	numpages = 1; // we always expose the same surface to the drawing engine.
-	bytesperline = surface->w;
+	dukebytesperline = surface->w;
 	vesachecked = 1;
 	vgacompatible = 1;
 	linearmode = 1;
@@ -153,7 +153,7 @@ static void init_new_res_vars(void)
 	for (i = 0; i <= ydim; i++)
 	{
 		ylookup[i] = j;
-		j += bytesperline;
+		j += dukebytesperline;
 	}
 
 	horizycent = ((ydim * 4) >> 1);
@@ -162,7 +162,7 @@ static void init_new_res_vars(void)
 	oxyaspect = oxdimen = oviewingrange = -1;
 
 	//Let the Assembly module how many pixels to skip when drawing a column
-	setBytesPerLine(bytesperline);
+	setBytesPerLine(dukebytesperline);
 
 
 	setview(0L, 0L, xdim - 1, ydim - 1);

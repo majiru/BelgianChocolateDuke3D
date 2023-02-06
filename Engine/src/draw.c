@@ -183,10 +183,10 @@ void rmhlineasm4(int32_t i1, const uint8_t* shade, int32_t colorIndex, int32_t i
 
 //Variable used to draw column.
 //This is how much you have to skip in the framebuffer in order to be one pixel below.
-static int32_t bytesperline;
-void setBytesPerLine(int32_t _bytesperline)
+static int32_t dukebytesperline;
+void setBytesPerLine(int32_t _dukebytesperline)
 {
-    bytesperline = _bytesperline;
+    dukebytesperline = _dukebytesperline;
 } 
 
 
@@ -238,7 +238,7 @@ int32_t vlineasm1(int32_t vince, const uint8_t* palookupoffse, int32_t numPixels
 			*dest = palookupoffse[temp];
 	    
 		vplce += vince;
-	    dest += bytesperline;
+	    dest += dukebytesperline;
 	    numPixels--;
     }
     return vplce;
@@ -276,7 +276,7 @@ int32_t tvlineasm1(int32_t i1, const uint8_t *texture, int32_t numPixels, int32_
 		i4 += i1;
         
         //We are drawing a column ?!
-		dest += bytesperline;
+		dest += dukebytesperline;
 		numPixels--;
 	}
 	return i4;
@@ -360,8 +360,8 @@ void tvlineasm2(uint32_t i1, uint32_t i2, uintptr_t i3, uintptr_t i4, uint32_t i
 #endif
 			}
 		}
-		i6 += bytesperline;
-	} while (i6 > i6 - bytesperline);
+		i6 += dukebytesperline;
+	} while (i6 > i6 - dukebytesperline);
 	asm1 = i5;
 	asm2 = ebp;
 } 
@@ -387,7 +387,7 @@ int32_t mvlineasm1(int32_t vince, const uint8_t* palookupoffse, int32_t i3, int3
 		}
 
 	    vplce += vince;
-	    dest += bytesperline;
+	    dest += dukebytesperline;
     }
     return vplce;
 }
@@ -422,7 +422,7 @@ void vlineasm4(int32_t columnIndex, uint8_t* framebuffer)
 
 			vplce[i] += vince[i];
 		}
-		index += bytesperline;
+		index += dukebytesperline;
 	} while (index < length);
 }
 
@@ -461,7 +461,7 @@ void mvlineasm4(int32_t columnIndex, uint8_t* framebuffer)
 		  }
 	      vplce[i] += vince[i];
         }
-        index += bytesperline;
+        index += dukebytesperline;
 
     } while (index < length);
 } 
@@ -530,7 +530,7 @@ void DrawSpriteVerticalLine(int32_t i2, int32_t numPixels, uint32_t i4, const ui
 			}
             
             //Move down one pixel on the framebuffer
-			dest += bytesperline;
+			dest += dukebytesperline;
 		}
 
 		

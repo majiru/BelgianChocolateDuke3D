@@ -3,14 +3,15 @@
 CFLAGS=-Fpw -I/sys/include/npe -I/sys/include/npe/SDL2 -I ../../Engine/src -D__plan9__ -D__${objtype}__
 TARG=games/duke3d
 
+DIRS=\
+	../../Engine/src \
+	audiolib \
+	midi \
+
 LIB=\
 	../../Engine/src/libbuild.a \
 	audiolib/libaudio.a \
 	midi/libmidi.a \
-
-CLEANFILES=\
-	$LIB \
-
 
 OFILES=\
 	actors.$O \
@@ -70,3 +71,9 @@ audiolib/libaudio.a:
 
 midi/libmidi.a:
 	@{cd midi && mk }
+
+clean:V:
+	rm -f *.[$OS] [$OS].out y.tab.? lex.yy.c y.debug y.output $TARG $CLEANFILES
+	for(i in $DIRS)@{
+		cd $i && mk clean
+	}
