@@ -44,6 +44,10 @@ void Shutdown(void);
 #endif
 #endif
 
+#ifdef __plan9__
+#define BYTE_ORDER LITTLE_ENDIAN
+#endif
+
 #ifndef BYTE_ORDER
 #error Please define your platform.
 #endif

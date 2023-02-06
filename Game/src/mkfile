@@ -1,0 +1,51 @@
+</$objtype/mkfile
+
+CFLAGS=-Fpw -I/sys/include/npe -I/sys/include/npe/SDL2 -I ../../Engine/src -D__plan9__ -D__${objtype}__
+TARG=games/duke3d
+
+OFILES=\
+	actors.$O \
+	animlib.$O \
+	config.$O \
+	control.$O \
+	game.$O \
+	gamedef.$O \
+	global.$O \
+	keyboard.$O \
+	menues.$O \
+	player.$O \
+	premap.$O \
+	rts.$O \
+	scriplib.$O \
+	sector.$O \
+	sounds.$O \
+	
+HFILES=\
+	_rts.h \
+	animlib.h \
+	config.h \
+	control.h \
+	develop.h \
+	duke3d.h \
+	dukeunix.h \
+	dukewin.h \
+	file_lib.h \
+	funct.h \
+	function.h \
+	game.h \
+	gamedefs.h \
+	global.h \
+	joystick.h \
+	kbd.h \
+	mouse.h \
+	names.h \
+	premap.h \
+	rts.h \
+	scriplib.h \
+	sounddebugdefs.h \
+	soundefs.h \
+	sounds.h \
+	types.h \
+	util_lib.h \
+
+</sys/src/cmd/mkone

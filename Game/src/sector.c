@@ -29,7 +29,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "audiolib/music.h"
 #include "fixedPoint_math.h"
 #include "engine.h"
-#include "keyboard.h"
+#include "kbd.h"
 #include "sounds.h"
 #include "soundefs.h"
 

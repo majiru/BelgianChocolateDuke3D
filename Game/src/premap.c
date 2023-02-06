@@ -34,7 +34,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "filesystem.h"
 #include "file_lib.h"
 #include "game.h"
-#include "keyboard.h"
+#include "kbd.h"
 #include "names.h"
 #include "sounds.h"
 

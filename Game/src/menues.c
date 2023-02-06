@@ -166,7 +166,7 @@ void savetemp(char  *fn,uint8_t* daptr,int32_t dasiz)
 {
     int fp;
 
-    fp = open(fn,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY,S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP);
+    fp = open(fn,O_WRONLY|O_CREAT|O_TRUNC|O_BINARY);
 
     write(fp,(uint8_t  *)daptr,dasiz);
 
