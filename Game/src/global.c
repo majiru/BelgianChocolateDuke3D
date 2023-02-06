@@ -338,7 +338,7 @@ int _dos_findnext(struct find_t *f)
     return(0);
 }
 
-#elif defined(UNIX) || defined(PLATFORM_MACOSX)
+#elif defined(UNIX) || defined(PLATFORM_MACOSX) || defined(__plan9__)
 int _dos_findfirst(char  *filename, int x, struct find_t *f)
 {
     char  *ptr;
@@ -556,7 +556,7 @@ int32 SafeOpenAppend (const char  *_filename, int32 filetype)
 #if (defined WIN32)
     handle = open(filename,O_RDWR | O_BINARY | O_CREAT | O_APPEND );
 #else
-	handle = open(filename,O_RDWR | O_BINARY | O_CREAT | O_APPEND , S_IREAD | S_IWRITE);
+	handle = open(filename,O_RDWR | O_BINARY | O_CREAT | O_APPEND);
 #endif
 
 	if (handle == -1)
@@ -591,8 +591,7 @@ int32 SafeOpenWrite (const char  *_filename, int32 filetype)
 #if (defined WIN32)
     handle = open(filename,O_RDWR | O_BINARY | O_CREAT | O_TRUNC );
 #else
-	handle = open(filename,O_RDWR | O_BINARY | O_CREAT | O_TRUNC
-	, S_IREAD | S_IWRITE);
+	handle = open(filename,O_RDWR | O_BINARY | O_CREAT | O_TRUNC);
 #endif
 
 	if (handle == -1)

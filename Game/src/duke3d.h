@@ -50,6 +50,10 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "dukewin.h"
 #endif
 
+#if (defined __plan9__)
+#include "dukeplan9.h"
+#endif
+
 
 //  FIX_00022: Automatically recognize the shareware grp (v1.3) + full version (1.3d) +
 //             atomic (1.4/1.5 grp) and the con files version (either 1.3 or 1.4) (JonoF's idea)
@@ -282,8 +286,7 @@ enum USRHOOKS_Errors
    };
 */
 
-#pragma pack(push)
-#pragma pack(1)
+#pragma pack on
 
 typedef struct
 {
@@ -292,7 +295,7 @@ typedef struct
     uint32_t bits;
 } input;
 
-#pragma pack(pop)
+#pragma pack off
 
 /* !!! FIXME: "sync" is defined in unistd.h ... :(  --ryan. */
 #define sync duke_sync
@@ -324,7 +327,7 @@ extern int32_t msx[2048],msy[2048];
 extern short cyclers[MAXCYCLERS][6],numcyclers;
 extern char  myname[2048];
 
-#pragma pack(push, 4)
+#pragma pack on
 struct user_defs
 {
     uint8_t  god,warp_on,cashman,eog,showallmap;
@@ -370,7 +373,7 @@ struct user_defs
 	uint32_t exeCRC[MAXPLAYERS];
 	uint32_t conCRC[MAXPLAYERS];
 };
-#pragma pack(pop)
+#pragma pack off
 
 struct player_orig
 {
@@ -396,7 +399,7 @@ void add_ammo( short, short, short, short );
 
 extern int32_t fricxv,fricyv;
 
-#pragma pack(push, 4)
+#pragma pack on
 struct player_struct
 {
     int32_t zoom,exitx,exity,loogiex[64],loogiey[64],numloogs,loogcnt;
@@ -467,7 +470,7 @@ struct player_struct
 
 	uint8_t fakeplayer;
 };
-#pragma pack(pop)
+#pragma pack off
 
 extern uint8_t  tempbuf[2048];
 extern uint8_t packbuf[576];
@@ -517,7 +520,7 @@ extern short camsprite;
 extern uint8_t  inspace(short sectnum);
 
 
-#pragma pack(push, 4)
+#pragma pack on
 struct weaponhit
 {
     uint8_t  cgg;
@@ -527,7 +530,7 @@ struct weaponhit
     int32_t floorz,ceilingz,lastvx,lastvy,bposx,bposy,bposz;
     int32_t temp_data[6];
 };
-#pragma pack(pop)
+#pragma pack off
 
 extern struct weaponhit hittype[MAXSPRITES];
 

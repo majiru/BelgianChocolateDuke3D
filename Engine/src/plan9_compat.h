@@ -26,7 +26,6 @@
 
 #define O_BINARY 0
 
-
 /*
 #define SOL_IP SOL_SOCKET
 #define IP_RECVERR  SO_BROADCAST
@@ -39,6 +38,8 @@
 #define O_CREAT OTRUNC
 #define O_WRONLY OWRITE
 #define O_RDONLY OREAD
+#define O_APPEND 0
+#define alloca malloc
 
 #define lseek seek
 

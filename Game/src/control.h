@@ -33,7 +33,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #ifndef _control_public
 #define _control_public
 
-#include "keyboard.h"
+#include "kbd.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -49,7 +49,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "file_lib.h"
 #include "gamedefs.h"
 #include "global.h"
-#include "keyboard.h"
+#include "kbd.h"
 #include "util_lib.h"
 #include "function.h"
 #include "control.h"
@@ -7768,7 +7768,7 @@ void Startup(void)
 void sendscore(char  *s)
 {
     if(numplayers > 1)
-      genericmultifunction(-1,s,strlen(s)+1,5);
+      genericmultifunction(-1,(uchar*)s,strlen(s)+1,5);
 }
 
 
@@ -8039,8 +8039,10 @@ void findGRPToUse(char * groupfilefullpath){
     while ((dirEntry = readdir(dir)) != NULL)
     {
         
-#ifdef __linux__
+#if defined(__linux__)
         if (dukeGRP_Match(dirEntry->d_name, _D_EXACT_NAMLEN(dirEntry)))
+#elif defined(__plan9__)
+	if (dukeGRP_Match(dirEntry->d_name, strlen(dirEntry->d_name)))
 #else
         if (dukeGRP_Match(dirEntry->d_name,dirEntry->d_namlen))
 #endif
@@ -10589,13 +10591,13 @@ void takescreenshot(void)
 	if(getGameDir()[0] != '\0')
 	{
 		sprintf(szFilename, "%s\\%s", getGameDir(), SCREENSHOTPATH);
-		mkdir(szFilename);
+		mkdir(szFilename, 0777);
 		sprintf(szFilename, "%s\\%s\\%s", getGameDir(), SCREENSHOTPATH, text);
 	}
 	// otherwise let's save it to the root.
 	else
 	{
-		mkdir(SCREENSHOTPATH);
+		mkdir(SCREENSHOTPATH, 0777);
 		sprintf(szFilename, "%s\\%s", SCREENSHOTPATH, text);
 	}
 

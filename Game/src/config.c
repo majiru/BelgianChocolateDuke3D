@@ -37,7 +37,7 @@ Prepared for public release: 03/21/2003 - Charlie Wiederhold, 3D Realms
 #include "engine.h"
 #include "file_lib.h"
 #include "function.h"
-#include "keyboard.h"
+#include "kbd.h"
 #include "scriplib.h"
 #include "util_lib.h"
 

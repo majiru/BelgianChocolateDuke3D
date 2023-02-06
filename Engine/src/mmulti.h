@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-void initmultiplayers();
+void initmultiplayers(void);
 void sendpacket(int32_t other, const uint8_t* bufptr, int32_t messleng);
 void setpackettimeout(int32_t datimeoutcount, int32_t daresendagaincount);
 void uninitmultiplayers(void);
