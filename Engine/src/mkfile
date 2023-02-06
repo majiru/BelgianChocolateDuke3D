@@ -2,6 +2,7 @@
 
 CFLAGS=-Fpw -I/sys/include/npe -I/sys/include/npe/SDL2 -D__plan9__ -D__${objtype}__
 LIB=libbuild.a
+CLEANFILES=libbuild.a
 
 OFILES=\
 	cache.$O \
