@@ -19,7 +19,7 @@
 
 // Bind our Cvars at startup. You can still add bindings after this call, but
 // it is recommanded that you bind your default CVars here.
-void CVARDEFS_Init()
+void CVARDEFS_Init(void)
 {
     g_CV_console_text_color = 0; // Set default value
     REGCONVAR("SetConsoleColor", " - Change console color.",g_CV_console_text_color, CVARDEFS_DefaultFunction);
@@ -62,7 +62,7 @@ void CVARDEFS_Init()
 }
 
 // I any of the Cvars need to render.. to it here.
-void CVARDEFS_Render()
+void CVARDEFS_Render(void)
 {
     if(g_CV_DebugJoystick)
     {

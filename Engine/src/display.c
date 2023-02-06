@@ -1138,7 +1138,7 @@ void VBE_setPalette(uint8_t  *palettebuffer)
 	SDL_CHECK_SUCCESS( SDL_SetPaletteColors(surface->format->palette, fmt_swap, 0, 256) );
 }
 
-void VBE_presentPalette()
+void VBE_presentPalette(void)
 {
 	// tanguyf: updating the palette is not immediate with a buffered surface, screen needs updating as well.
 	// Call this function if nextpage() is not called. E.g. static intro logo.

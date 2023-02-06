@@ -3,10 +3,16 @@
 CFLAGS=-Fpw -I/sys/include/npe -I/sys/include/npe/SDL2 -I ../../Engine/src -D__plan9__ -D__${objtype}__
 TARG=games/duke3d
 
+LIB=\
+	../../Engine/src/libbuild.a \
+
+
 OFILES=\
 	actors.$O \
 	animlib.$O \
+	cvars.$O \
 	config.$O \
+	console.$O \
 	control.$O \
 	game.$O \
 	gamedef.$O \
