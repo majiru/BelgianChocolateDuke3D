@@ -261,7 +261,7 @@ static void dosendpackets(long other)
 
 	}
 
-	dacrc = getcrc(gcom->buffer,(short)k);
+	dacrc = getcrc((uchar*)gcom->buffer,(short)k);
 	gcom->buffer[k++] = (dacrc&255);
 	gcom->buffer[k++] = (dacrc>>8);
 
@@ -350,7 +350,7 @@ void sendlogoff(void)
 	tempbuf[1] = myconnectindex;
 	for(i=connecthead;i>=0;i=connectpoint2[i])
 		if (i != myconnectindex)
-			sendpacket(i,tempbuf,2L);
+			sendpacket(i,(uchar*)tempbuf,2L);
 }
 
 int32_t getoutputcirclesize(void)
@@ -413,7 +413,7 @@ short getpacket (short *other, uint8_t *bufptr)
 
 	dacrc = ((unsigned short)gcom->buffer[messleng-2]);
 	dacrc += (((unsigned short)gcom->buffer[messleng-1])<<8);
-	if (dacrc != getcrc(gcom->buffer,(short)(messleng-2)))        /* CRC check */
+	if (dacrc != getcrc((uchar*)gcom->buffer,(short)(messleng-2)))        /* CRC check */
 	{
 #if (PRINTERRORS)
 		printf("\n%ld CRC",gcom->buffer[0]);
@@ -452,7 +452,7 @@ short getpacket (short *other, uint8_t *bufptr)
 				{
 								 /* GOOD! Take second half of double packet */
 #if (PRINTERRORS)
-					printf("\n%ld-%ld .û ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
+					printf("\n%ld-%ld .ï¿½ ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
 #endif
 					messleng = ((long)gcom->buffer[3]) + (((long)gcom->buffer[4])<<8);
 					lastpacketleng = gcom->numbytes-7-messleng;
@@ -472,7 +472,7 @@ short getpacket (short *other, uint8_t *bufptr)
 	if ((gcom->buffer[1]&128) == 0)           /* Single packet */
 	{
 #if (PRINTERRORS)
-		printf("\n%ld û  ",gcom->buffer[0]);
+		printf("\n%ld ï¿½  ",gcom->buffer[0]);
 #endif
 
 		messleng = gcom->numbytes-5;
@@ -485,7 +485,7 @@ short getpacket (short *other, uint8_t *bufptr)
 
 														 /* Double packet */
 #if (PRINTERRORS)
-	printf("\n%ld-%ld ûû ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
+	printf("\n%ld-%ld ï¿½ï¿½ ",gcom->buffer[0],(gcom->buffer[0]+1)&255);
 #endif
 
 	messleng = ((long)gcom->buffer[3]) + (((long)gcom->buffer[4])<<8);
@@ -547,6 +547,14 @@ void genericmultifunction(int32_t other, const uint8_t *bufptr, int32_t messleng
 #  define neterrno() WSAGetLastError()
 #  define sockettype SOCKET
 #  define socketclose(x) closesocket(x)
+#elif defined(__plan9__)
+#  define sockettype int
+#  define neterrno() (0)
+#  define socketclose(x) close(x)
+#  define socklen_t long
+struct sockaddr_in {
+	int x;
+};
 #else
 #  include <arpa/inet.h>
 #  include <netinet/in.h>
@@ -659,6 +667,10 @@ static char *static_ipstring(int ip)
 
 static int send_udp_packet(int ip, short port, void *pkt, size_t pktsize)
 {
+
+#ifdef __plan9__
+    return 0;
+#else
     /* !!! FIXME: See if this would ever block. */
     /* !!! FIXME: See if this would send a partial packet. */
     struct sockaddr_in addr;
@@ -682,6 +694,7 @@ static int send_udp_packet(int ip, short port, void *pkt, size_t pktsize)
 /*printf("Sent %d byte packet to %s:%d\n", (int) pktsize, static_ipstring(ip), (int) port);*/
 
     return(1);
+#endif
 }
 
 
@@ -699,6 +712,10 @@ static int get_udp_packet(int *ip, short *_port, void *pkt, size_t pktsize)
     socklen_t fromlen = sizeof (addr);
     int valid = 0;
     int i;
+
+#ifdef __plan9__
+    return -1;
+#else
 
     /* FIXME: Will this ever receive a partial packet? */
     int rc = recvfrom(udpsocket, pkt, pktsize, 0,
@@ -811,6 +828,7 @@ static int get_udp_packet(int *ip, short *_port, void *pkt, size_t pktsize)
 //else printf("Got %d byte packet from %s:%d\n", (int) rc, static_ipstring(*ip), (int) port);
 	//printf( "IP from client %d", *ip);
     return(rc);
+#endif
 }
 
 
@@ -880,6 +898,10 @@ static int set_socket_blockmode(int onOrOff)
     unsigned long flags;
     int rc = 0;
 
+#ifdef __plan9__
+    return -1;
+#else
+
     /* set socket to be (non-)blocking. */
 
 #if WIN32
@@ -904,6 +926,7 @@ static int set_socket_blockmode(int onOrOff)
     }
 
     return(rc);
+#endif
 }
 
 
@@ -911,6 +934,10 @@ static int set_socket_broadcast(int onOrOff)
 {
     int f = (onOrOff) ? 1 : 0;
     int rc;
+
+#ifdef __plan9__
+    return 1;
+#else
 
     /* give socket clearance to broadcast. */
     rc = setsockopt(udpsocket, SOL_SOCKET, SO_BROADCAST, (char *)(&f), sizeof (f)) == 0;
@@ -921,6 +948,7 @@ static int set_socket_broadcast(int onOrOff)
     }
 
     return(rc);
+#endif
 }
 
 
@@ -930,6 +958,10 @@ static int open_udp_socket(int ip, int port)
 
     printf("Setting up UDP interface %s:%d...\n", static_ipstring(ip), port);
 	printf("Stun is currently %s\n", (g_bStun) ? "Enabled":"Disabled");
+
+#ifdef __plan9__
+    return 0;
+#else
 
     udpsocket = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -965,6 +997,7 @@ static int open_udp_socket(int ip, int port)
     }
 
     return(1);
+#endif
 }
 
 /* server init. */
@@ -1472,6 +1505,11 @@ static gcomtype *init_network_transport(char **ARGV, int argpos)
 {
     gcomtype *retval;
 
+#ifdef __plan9__
+    printf("NETWORK TRANSIT: PORT ME!\n");
+    return nil;
+#else
+
     printf("UDP NETWORK TRANSPORT INITIALIZING...\n");
 
     ctrlc_pressed = 0;
@@ -1506,6 +1544,7 @@ static gcomtype *init_network_transport(char **ARGV, int argpos)
     }
 
     return(retval);
+#endif
 }
 
 

@@ -10,7 +10,7 @@ OFILES=\
 	engine.$O \
 	filesystem.$O \
 	fixedPoint_math.$O \
-#TODO	mmulti.$O \
+	mmulti.$O \
 	tiles.$O \
 	
 HFILES=\
