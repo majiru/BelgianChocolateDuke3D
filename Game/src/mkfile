@@ -11,6 +11,7 @@ OFILES=\
 	actors.$O \
 	animlib.$O \
 	cvars.$O \
+	cvar_defs.$O \
 	config.$O \
 	console.$O \
 	control.$O \
