@@ -447,11 +447,11 @@ void MV_ServiceVoc
 		count = MV_BufferSize / MV_SampleSize * MV_Channels;
 		if ( MV_Bits == 16 )
 		{
-			MV_16BitDownmix(dest, count);
+			MV_16BitDownmix((uchar*)dest, count);
 		}
 		else
 		{
-			MV_8BitDownmix(dest, count);
+			MV_8BitDownmix((uchar*)dest, count);
 		}
 			
 	}
@@ -706,7 +706,7 @@ playbackstatus MV_GetNextVOCBlock
             }
          else
             {
-            voice->LoopEnd = ( char * )blocklength;
+            voice->LoopEnd = ( uchar * )blocklength;
             }
 
          voice->LoopStart = voice->sound + ( unsigned long )voice->LoopStart;
@@ -1706,9 +1706,9 @@ int MV_PlayLoopedWAV
 
    riff = ( riff_header * )ptr;
 
-   if ( ( strncmp( riff->RIFF, "RIFF", 4 ) != 0 ) ||
-      ( strncmp( riff->WAVE, "WAVE", 4 ) != 0 ) ||
-      ( strncmp( riff->fmt, "fmt ", 4) != 0 ) )
+   if ( ( strncmp( (char*)riff->RIFF, "RIFF", 4 ) != 0 ) ||
+      ( strncmp( (char*)riff->WAVE, "WAVE", 4 ) != 0 ) ||
+      ( strncmp( (char*)riff->fmt, "fmt ", 4) != 0 ) )
       {
       MV_SetErrorCode( MV_InvalidWAVFile );
       return( MV_Error );
@@ -1737,7 +1737,7 @@ int MV_PlayLoopedWAV
       return( MV_Error );
       }
 
-   if ( strncmp( data->DATA, "data", 4 ) != 0 )
+   if ( strncmp( (char*)data->DATA, "data", 4 ) != 0 )
       {
       MV_SetErrorCode( MV_InvalidWAVFile );
       return( MV_Error );
@@ -1776,7 +1776,7 @@ int MV_PlayLoopedWAV
    voice->position    = 0;
    voice->length      = 0;
    voice->BlockLength = absloopend;
-   voice->NextBlock   = ( char * )( data + 1 );
+   voice->NextBlock   = ( uchar * )( data + 1 );
    voice->next        = NULL;
    voice->prev        = NULL;
    voice->priority    = priority;
@@ -2304,7 +2304,7 @@ int MV_Init
 	   return( MV_Error);
    }
 
-   MV_FooBuffer = ptr;
+   MV_FooBuffer = (double*)ptr;
 
 // Start the playback engine
    status = MV_StartPlayback();

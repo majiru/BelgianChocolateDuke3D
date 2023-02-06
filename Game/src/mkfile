@@ -5,6 +5,11 @@ TARG=games/duke3d
 
 LIB=\
 	../../Engine/src/libbuild.a \
+	audiolib/libaudio.a \
+	midi/libmidi.a \
+
+CLEANFILES=\
+	$LIB \
 
 
 OFILES=\
@@ -56,3 +61,12 @@ HFILES=\
 	util_lib.h \
 
 </sys/src/cmd/mkone
+
+../../Engine/src/libbuild.a:
+	@{cd ../../Engine/src/ && mk }
+
+audiolib/libaudio.a:
+	@{cd audiolib && mk }
+
+midi/libmidi.a:
+	@{cd midi && mk }

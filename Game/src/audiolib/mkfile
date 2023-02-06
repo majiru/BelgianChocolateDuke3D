@@ -1,0 +1,31 @@
+</$objtype/mkfile
+
+CFLAGS=-Fpw -I ../../../Engine/src -I/sys/include/npe -I/sys/include/npe/SDL2 -D__plan9__ -D__${objtype}__
+LIB=libaudio.a
+
+OFILES=\
+	dpmi.$O \
+	dsl.$O \
+	fx_man.$O \
+	ll_man.$O \
+	multivoc.$O \
+	mv_mix.$O \
+	mvreverb.$O \
+	pitch.$O \
+	usrhooks.$O \
+
+HFILES=\
+	_multivc.h \
+	dpmi.h \
+	dsl.h \
+	fx_man.h \
+	ll_man.h \
+	linklist.h \
+	multivoc.h \
+	sndcards.h \
+	music.h \
+	pitch.h \
+	usrhooks.h \
+	util.h \
+
+</sys/src/cmd/mksyslib

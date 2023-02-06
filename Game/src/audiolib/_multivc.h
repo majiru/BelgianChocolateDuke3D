@@ -71,6 +71,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define NumberOfBuffers   16
 #define TotalBufferSize   ( MixBufferSize * NumberOfBuffers )
 
+#ifdef __plan9__
+#undef PI
+#endif
 #define PI                3.1415926536
 
 typedef enum
