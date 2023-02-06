@@ -1373,7 +1373,7 @@ static void wallscan(int32_t x1, int32_t x2,
         if (d4 >= u4) 
             vlineasm4(d4-u4+1,ylookup[u4]+x+frameoffset);
 
-        i = x+frameoffset+ylookup[d4+1];
+        i = (intptr_t)(x+frameoffset+ylookup[d4+1]);
         
         if (y2ve[0] > d4)
             prevlineasm1(vince[0],palookupoffse[0],y2ve[0]-d4-1,vplce[0],(uint8_t*) bufplce[0],(uint8_t*) i+0);
@@ -1505,7 +1505,7 @@ static void maskwallscan(int32_t x1, int32_t x2,
             else
                 i <<= tileHeight;
             
-            bufplce[z] = tiles[globalpicnum].data+i;
+            bufplce[z] = (intptr_t)(tiles[globalpicnum].data+i);
 
             vince[z] = swal[dax]*globalyscale;
             vplce[z] = globalzd + vince[z]*(y1ve[z]-globalhoriz+1);
@@ -1545,7 +1545,7 @@ static void maskwallscan(int32_t x1, int32_t x2,
 
         if (d4 >= u4) mvlineasm4(d4-u4+1,ylookup[u4]+p);
 
-        i = p+ylookup[d4+1];
+        i = (intptr_t)(p+ylookup[d4+1]);
         if (y2ve[0] > d4) mvlineasm1(vince[0],palookupoffse[0],y2ve[0]-d4-1,vplce[0],(const uint8_t*)bufplce[0],(uint8_t*)i+0);
         if (y2ve[1] > d4) mvlineasm1(vince[1],palookupoffse[1],y2ve[1]-d4-1,vplce[1],(const uint8_t*)bufplce[1],(uint8_t*)i+1);
         if (y2ve[2] > d4) mvlineasm1(vince[2],palookupoffse[2],y2ve[2]-d4-1,vplce[2],(const uint8_t*)bufplce[2],(uint8_t*)i+2);
@@ -1869,7 +1869,7 @@ static void grouscan (int32_t dax1, int32_t dax2, int32_t sectnum, uint8_t  dast
     globvis = mulscale16(globvis,xdimscale);
     j = (intptr_t) palookup[globalpal];
 
-    setupslopevlin(((int32_t)(picsiz[globalpicnum]&15))+(((int32_t)(picsiz[globalpicnum]>>4))<<8),tiles[globalpicnum].data,-ylookup[1]);
+    setupslopevlin(((int32_t)(picsiz[globalpicnum]&15))+(((int32_t)(picsiz[globalpicnum]>>4))<<8),(intptr_t)(tiles[globalpicnum].data),-ylookup[1]);
 
     l = (globalzd>>16);
 
@@ -1916,7 +1916,7 @@ static void grouscan (int32_t dax1, int32_t dax2, int32_t sectnum, uint8_t  dast
             globalx3 = (globalx2>>10);
             globaly3 = (globaly2>>10);
             asm3 = mulscale16(y2,globalzd) + (globalzx>>6);
-            slopevlin(ylookup[y2]+x+frameoffset,krecipasm(asm3>>3),slopalookup,y2+(shoffs>>15),y2-y1+1,globalx1,globaly1);
+            slopevlin((intptr_t)(ylookup[y2]+x+frameoffset),krecipasm(asm3>>3),slopalookup,y2+(shoffs>>15),y2-y1+1,globalx1,globaly1);
 
             if ((x&15) == 0) faketimerhandler();
         }
@@ -3121,18 +3121,18 @@ static void transmaskvline2 (int32_t x)
     i = lwall[x] + globalxpanning;
     if (i >= tiles[globalpicnum].dim.width)
         i %= tiles[globalpicnum].dim.width;
-    bufplce[0] = tiles[globalpicnum].data+i*tiles[globalpicnum].dim.height;
+    bufplce[0] = (intptr_t)(tiles[globalpicnum].data+i*tiles[globalpicnum].dim.height);
 
     i = lwall[x2] + globalxpanning;
     if (i >= tiles[globalpicnum].dim.width)
         i %= tiles[globalpicnum].dim.width;
-    bufplce[1] = tiles[globalpicnum].data+i*tiles[globalpicnum].dim.height;
+    bufplce[1] = (intptr_t)(tiles[globalpicnum].data+i*tiles[globalpicnum].dim.height);
 
     
     y1 = max(y1ve[0],y1ve[1]);
     y2 = min(y2ve[0],y2ve[1]);
 
-    i = x+frameoffset;
+    i = (intptr_t)(x+frameoffset);
 
     if (y1ve[0] != y1ve[1])
     {
@@ -3360,8 +3360,7 @@ int saveboard(char  *filename, int32_t *daposx, int32_t *daposy,
 #endif
 
     if ((fil = open(filename,
-                    O_BINARY|O_TRUNC|O_CREAT|O_WRONLY,
-                    permissions)) == -1)
+                    O_BINARY|O_TRUNC|O_CREAT|O_WRONLY)) == -1)
     {
         return(-1);
     }
@@ -4021,7 +4020,7 @@ static void dorotatesprite (int32_t sx, int32_t sy, int32_t z, short a, short pi
                     by += yv*(y1-oy);
                     oy = y1;
 
-                    bufplce[xx] = (bx>>16)*tileHeight+bufplc;
+                    bufplce[xx] = (intptr_t)((bx>>16)*tileHeight+bufplc);
                     vplce[xx] = by;
                     y1ve[xx] = y1;
                     y2ve[xx] = y2-1;
@@ -4059,7 +4058,7 @@ static void dorotatesprite (int32_t sx, int32_t sy, int32_t z, short a, short pi
 
                     if (d4 >= u4) vlineasm4(d4-u4+1,ylookup[u4]+p);
 
-                    i = p+ylookup[d4+1];
+                    i = (intptr_t)(p+ylookup[d4+1]);
                     if (y2ve[0] > d4) 
                         prevlineasm1(vince[0],palookupoffse[0],y2ve[0]-d4-1,vplce[0],(const uint8_t*)bufplce[0],(uint8_t*)i+0);
                     if (y2ve[1] > d4) 
@@ -4087,7 +4086,7 @@ static void dorotatesprite (int32_t sx, int32_t sy, int32_t z, short a, short pi
 
                     if (d4 >= u4) mvlineasm4(d4-u4+1,ylookup[u4]+p);
 
-                    i = p+ylookup[d4+1];
+                    i = (intptr_t)(p+ylookup[d4+1]);
                     if (y2ve[0] > d4) mvlineasm1(vince[0],palookupoffse[0],y2ve[0]-d4-1,vplce[0],(const uint8_t*)bufplce[0],(uint8_t*)i+0);
                     if (y2ve[1] > d4) mvlineasm1(vince[1],palookupoffse[1],y2ve[1]-d4-1,vplce[1],(const uint8_t*)bufplce[1],(uint8_t*)i+1);
                     if (y2ve[2] > d4) mvlineasm1(vince[2],palookupoffse[2],y2ve[2]-d4-1,vplce[2],(const uint8_t*)bufplce[2],(uint8_t*)i+2);
@@ -4736,9 +4735,9 @@ static void ceilspritehline (int32_t x2, int32_t y)
     int32_t x1, v, bx, by;
 
     /*
-     * x = x1 + (x2-x1)t + (y1-y2)u  ³  x = 160v
-     * y = y1 + (y2-y1)t + (x2-x1)u  ³  y = (scrx-160)v
-     * z = z1 = z2                   ³  z = posz + (scry-horiz)v
+     * x = x1 + (x2-x1)t + (y1-y2)u  ï¿½  x = 160v
+     * y = y1 + (y2-y1)t + (x2-x1)u  ï¿½  y = (scrx-160)v
+     * z = z1 = z2                   ï¿½  z = posz + (scry-horiz)v
      */
 
     x1 = lastx[y];
@@ -9100,7 +9099,7 @@ void completemirror(void)
 
     transarea += (mirrorsx2-mirrorsx1)*(windowy2-windowy1);
 
-    p = frameplace+ylookup[windowy1+mirrorsy1]+windowx1+mirrorsx1;
+    p = (intptr_t)(frameplace+ylookup[windowy1+mirrorsy1]+windowx1+mirrorsx1);
     i = windowx2-windowx1-mirrorsx2-mirrorsx1;
     mirrorsx2 -= mirrorsx1;
     // FIX_00085: Optimized Video driver. FPS increases by +20%.

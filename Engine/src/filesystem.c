@@ -83,7 +83,7 @@ int32_t initgroupfile(const char  *filename)
 	//groupfil_memory[numgroupfiles] = NULL; // addresses of raw GRP files in memory
 	//groupefil_crc32[numgroupfiles] = 0;
     
-	archive->fileDescriptor = open(filename,O_BINARY|O_RDONLY,S_IREAD);
+	archive->fileDescriptor = open(filename,O_BINARY|O_RDONLY);
     
     if (archive->fileDescriptor < 0){
         printf("Error: Unable to open file %s.\n",filename);
@@ -422,6 +422,18 @@ int32_t filelength(int32_t fd){
     struct stat stats;
     fstat(fd, &stats);
     return (int32_t )stats.st_size;
+}
+#endif
+
+#if defined(__plan9__)
+int32_t filelength(int32_t fd){
+    Dir *d;
+    int32_t len;
+
+    d = dirfstat(fd);
+    len = d->length;
+    free(d);
+    return len;
 }
 #endif
 

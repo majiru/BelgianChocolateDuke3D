@@ -9,6 +9,8 @@
     #include "unix_compat.h"
 #elif (defined __APPLE__)
     #include "macos_compat.h"
+#elif (defined __plan9__)
+    #include "plan9_compat.h"
 #else
 #error Define your platform!
 #endif

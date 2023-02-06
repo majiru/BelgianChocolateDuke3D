@@ -99,7 +99,7 @@ void* get_framebuffer(void)
  * !!!  titlebar caption.   --ryan.
  */
 static uint8_t  screenalloctype = 255;
-static void init_new_res_vars()
+static void init_new_res_vars(void)
 {
 	int i = 0;
 	int j = 0;
@@ -200,7 +200,8 @@ static void go_to_new_vid_mode(int w, int h)
 	SDL_CHECK_NOT_NULL(window, "create window");
 
 	// don't override higher-res app icon on OS X or Windows
-#if !PLATFORM_MACOSX && !WIN32
+        // plan9 has no window icons
+#if !PLATFORM_MACOSX && !WIN32 && !defined(__plan9__)
 	SDL_Surface* image = SDL_LoadBMP_RW(SDL_RWFromMem(iconBMP, sizeof(iconBMP)), 1);
 	Uint32 colorkey = 0; // index in this image to be transparent
 	SDL_SetColorKey(image, SDL_TRUE, colorkey);
@@ -214,9 +215,11 @@ static void go_to_new_vid_mode(int w, int h)
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_CHECK_NOT_NULL(renderer, "create renderer");
 
+#ifndef __plan9__
 	SDL_RendererInfo rendererInfo;
 	SDL_CHECK_SUCCESS(SDL_GetRendererInfo(renderer, &rendererInfo));
 	printf("SDL Renderer: '%s'.\n", rendererInfo.name);
+#endif
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
 	//SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
@@ -249,7 +252,7 @@ static void present_framebuffer(void)
 	SDL_RenderPresent(renderer);
 }
 
-static inline int sdl_mouse_button_filter(SDL_MouseButtonEvent const *event)
+static int sdl_mouse_button_filter(SDL_MouseButtonEvent *event)
 {
 		/*
 		 * What bits BUILD expects:
@@ -326,7 +329,7 @@ static int sdl_mouse_motion_filter(SDL_Event const *event)
 	 *  which we check for explicitly, and give the engine a keypad enter
 	 *  enter event.
 	 */
-static inline int handle_keypad_enter_hack(const SDL_Event *event)
+static int handle_keypad_enter_hack(const SDL_Event *event)
 {
 	static int kp_enter_hack = 0;
 	int retval = 0;
@@ -634,6 +637,8 @@ uint8_t  _readlastkeyhit(void)
 
 static void output_sdl_versions(void)
 {
+/* FIXME plan9 */
+#ifndef __plan9__
 	SDL_version linked_ver;
 	SDL_GetVersion(&linked_ver);
 
@@ -643,6 +648,7 @@ static void output_sdl_versions(void)
 	printf("SDL Display driver for the BUILD engine initializing.\n");
 	printf("SDL Compiled %s against SDL version %d.%d.%d ...\n", __DATE__, compiled_ver.major, compiled_ver.minor, compiled_ver.patch);
 	printf("SDL Linked against SDL version %d.%d.%d ...\n", linked_ver.major, linked_ver.minor, linked_ver.patch);
+#endif
 }
 
 /* lousy -ansi flag.  :) */

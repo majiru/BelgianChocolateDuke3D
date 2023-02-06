@@ -1,0 +1,33 @@
+</$objtype/mkfile
+
+CFLAGS=-Fpw -I/sys/include/npe -I/sys/include/npe/SDL2 -D__plan9__ -D__${objtype}__
+LIB=libbuild.a
+
+OFILES=\
+	cache.$O \
+	display.$O \
+	draw.$O \
+	engine.$O \
+	filesystem.$O \
+	fixedPoint_math.$O \
+#TODO	mmulti.$O \
+	tiles.$O \
+	
+HFILES=\
+	build.h \
+	cache.h \
+	draw.h \
+	display.h \
+	engine.h \
+	filesystem.h \
+	fixedPoint_math.h \
+	icon.h \
+	macos_compat.h \
+	mmulti.h \
+	platform.h \
+	sdl_util.h \
+	tiles.h \
+	unix_compat.h \
+	win32_compat.h
+
+</sys/src/cmd/mksyslib
