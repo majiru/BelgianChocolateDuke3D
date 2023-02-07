@@ -7491,8 +7491,10 @@ void Logo(void)
 		    if(!KB_KeyWaiting() && nomorelogohack == 0)
 		    {
 		        getpackets();
-				
-		        playanm("logo.anm",5);
+
+#ifndef __plan9__       /* FIXME */
+                        playanm("logo.anm",5);
+#endif
 		        palto(0,0,0,63,false);
 		        KB_FlushKeyboardQueue();
 		    }
