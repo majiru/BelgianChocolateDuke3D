@@ -177,6 +177,7 @@ static void init_new_res_vars(void)
 
 static void go_to_new_vid_mode(int w, int h)
 {
+
 	if (window != NULL)
 	{
 		SDL_FreeSurface(surface_rgba);
@@ -192,8 +193,8 @@ static void go_to_new_vid_mode(int w, int h)
 
 	window = SDL_CreateWindow(
 		titleName,
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED,
 		w, h,
 		(FullScreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_ALLOW_HIGHDPI);
 
