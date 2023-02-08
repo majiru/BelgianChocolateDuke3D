@@ -97,7 +97,6 @@ void CONFIG_GetSetupFilename( void )
    {
    int32 i;
 
-
    setupfilename[0] = '\0';
 
    // Are we trying to load a mod?
@@ -105,7 +104,7 @@ void CONFIG_GetSetupFilename( void )
 		FILE *fp = NULL;
 
 	   //Yes
-		sprintf(setupfilename, "%s\\%s", getGameDir(), SETUPFILENAME);
+		sprintf(setupfilename, "%s/%s", getGameDir(), SETUPFILENAME);
 		
 		// let's make sure it's actually there
 		fp = fopen(setupfilename, "r");
@@ -114,12 +113,12 @@ void CONFIG_GetSetupFilename( void )
         else{
 			// It doesn't exist, so revert to the main one.
 			printf("Config file: %s does not exist, using main config.\n", setupfilename);
-			sprintf(setupfilename, "%s", SETUPFILENAME);
+			sprintf(setupfilename, "%s/lib/duke3d/%s", getenv("home"), SETUPFILENAME);
 		}
 
    }else{
 	   //No
-		strcpy (setupfilename, SETUPFILENAME);
+		sprintf(setupfilename, "%s/lib/duke3d/%s", getenv("home"), SETUPFILENAME);
    }
 
    printf("Using Setup file: '%s'\n",setupfilename);
