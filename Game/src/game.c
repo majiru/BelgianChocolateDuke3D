@@ -8031,7 +8031,7 @@ void findGRPToUse(char * groupfilefullpath){
             strcat(directoryToScan,"/");
     }
     else{
-        strcat(directoryToScan, "./");    
+        strcat(directoryToScan, "/sys/games/lib/duke3d/");
     }
     
     printf("Scanning directory '%s' for a GRP file like '%s'.\n",directoryToScan,baseDir);

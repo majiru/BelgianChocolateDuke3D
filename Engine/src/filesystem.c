@@ -62,13 +62,17 @@ static grpSet_t grpSet;
 uint8_t         crcBuffer[ 1 << 20]     ;
 int32_t initgroupfile(const char  *filename)
 {
-	uint8_t         buf[16]                 ;
-	int32_t         i, j, k                 ;
-    grpArchive_t*   archive                 ;
+	uint8_t	buf[16];
+	char namebuf[512], *path;
+	int32_t i, j, k;
+	grpArchive_t* archive;
     
+	if((path = getGameDir())[0] == 0)
+		snprint(namebuf, sizeof namebuf, "/sys/games/lib/duke3d/%s", filename);
+	else
+		snprint(namebuf, sizeof namebuf, "%s/%s", path, filename);
     
-    
-	printf("Loading %s ...\n", filename);
+	printf("Loading %s ...\n", namebuf);
     
 	if (grpSet.num == MAXGROUPFILES){
         printf("Error: Unable to open an extra GRP archive <= No more slot available.\n");
@@ -83,10 +87,10 @@ int32_t initgroupfile(const char  *filename)
 	//groupfil_memory[numgroupfiles] = NULL; // addresses of raw GRP files in memory
 	//groupefil_crc32[numgroupfiles] = 0;
     
-	archive->fileDescriptor = open(filename,O_BINARY|O_RDONLY);
+	archive->fileDescriptor = open(namebuf,O_BINARY|O_RDONLY);
     
     if (archive->fileDescriptor < 0){
-        printf("Error: Unable to open file %s.\n",filename);
+        printf("Error: Unable to open file %s.\n",namebuf);
         getchar();
         exit(0);
     }
