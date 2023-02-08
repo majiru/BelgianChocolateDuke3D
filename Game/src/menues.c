@@ -1404,6 +1404,8 @@ void menus(void)
 
     if( (ps[myconnectindex].gm&MODE_MENU) == 0 )
     {
+        if(SDL_GetRelativeMouseMode() == SDL_FALSE)
+            SDL_SetRelativeMouseMode(SDL_TRUE);
         tiles[MAXTILES-3].lock = 1;
         return;
     }
@@ -1419,6 +1421,9 @@ void menus(void)
         vscrn();
 
 	// printf("Current menu=%d, game mode=%d, last menu =%d\n", current_menu, ps[myconnectindex].gm, last_menu);
+
+    if(SDL_GetRelativeMouseMode() == SDL_TRUE)
+        SDL_SetRelativeMouseMode(SDL_FALSE);
 
     switch(current_menu)
     {
