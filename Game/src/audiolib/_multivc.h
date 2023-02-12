@@ -90,6 +90,8 @@ typedef enum
    KeepPlaying
    } playbackstatus;
 
+#pragma pack on
+
 
 typedef struct VoiceNode
    {
@@ -201,6 +203,8 @@ typedef struct
 
 typedef MONO8  VOLUME8[ 256 ];
 typedef MONO16 VOLUME16[ 256 ];
+
+#pragma pack off
 
 // typedef uint8_t HARSH_CLIP_TABLE_8[ MV_NumVoices * 256 ];
 

@@ -168,7 +168,7 @@ int   DSL_BeginBufferedPlayback( char *BufferStart,
 
 	if (chunksize % blah) chunksize += blah - (chunksize % blah);
 
-	if (Mix_OpenAudio(SampleRate, format, channels, chunksize) < 0) {
+	if (Mix_OpenAudio(SampleRate, format, channels, _BufferSize) < 0) {
         printf("Mix_OpenAudio: failed to open audio: %s\n", Mix_GetError());
 		DSL_SetErrorCode(DSL_MixerInitFailure);
 		

@@ -8085,6 +8085,8 @@ int main(int argc,char  **argv)
 	uint8_t  kbdKey;
 	uint8_t  *exe;
 
+	Mix_Init(1);
+
 
 	//printf(	"This is a debug version 19.7.1 only Based on 19.7\n"
 	//		"Fully compliant with v19.7. Added the following:\n\n"
