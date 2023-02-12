@@ -1,7 +1,8 @@
 </$objtype/mkfile
 
 CFLAGS=-Fpw -I/sys/include/npe -I/sys/include/npe/SDL2 -I ../../Engine/src -D__plan9__ -D__${objtype}__
-TARG=games/duke3d
+BIN=/$objtype/bin/games
+TARG=duke3d
 
 DIRS=\
 	../../Engine/src \
@@ -9,9 +10,9 @@ DIRS=\
 	midi \
 
 LIB=\
-	../../Engine/src/libbuild.a \
-	audiolib/libaudio.a \
-	midi/libmidi.a \
+	../../Engine/src/libbuild.$O.a \
+	audiolib/libaudio.$O.a \
+	midi/libmidi.$O.a \
 
 OFILES=\
 	actors.$O \
@@ -63,13 +64,13 @@ HFILES=\
 
 </sys/src/cmd/mkone
 
-../../Engine/src/libbuild.a:
+../../Engine/src/libbuild.$O.a:
 	@{cd ../../Engine/src/ && mk }
 
-audiolib/libaudio.a:
+audiolib/libaudio.$O.a:
 	@{cd audiolib && mk }
 
-midi/libmidi.a:
+midi/libmidi.$O.a:
 	@{cd midi && mk }
 
 clean:V:

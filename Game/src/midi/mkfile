@@ -1,8 +1,8 @@
 </$objtype/mkfile
 
 CFLAGS=-Fpw -I ../../../Engine/src -I/sys/include/npe -I/sys/include/npe/SDL2 -D__plan9__ -D__${objtype}__
-LIB=libmidi.a
-CLEANFILES=libmidi.a
+LIB=libmidi.$O.a
+CLEANFILES=libmidi.$O.a
 
 OFILES=\
 	sdl_midi.$O

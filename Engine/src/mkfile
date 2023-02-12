@@ -1,8 +1,8 @@
 </$objtype/mkfile
 
 CFLAGS=-Fpw -I/sys/include/npe -I/sys/include/npe/SDL2 -D__plan9__ -D__${objtype}__
-LIB=libbuild.a
-CLEANFILES=libbuild.a
+LIB=libbuild.$O.a
+CLEANFILES=libbuild.$O.a
 
 OFILES=\
 	cache.$O \

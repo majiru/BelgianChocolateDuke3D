@@ -1,8 +1,8 @@
 </$objtype/mkfile
 
 CFLAGS=-Fpw -I ../../../Engine/src -I/sys/include/npe -I/sys/include/npe/SDL2 -D__plan9__ -D__${objtype}__
-LIB=libaudio.a
-CLEANFILES=libaudio.a
+LIB=libaudio.$O.a
+CLEANFILES=libaudio.$O.a
 
 OFILES=\
 	dpmi.$O \
