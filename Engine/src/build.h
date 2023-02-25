@@ -38,7 +38,7 @@
 	#define EXTERN extern
 #endif
 
-#pragma pack(1)
+#pragma pack on
 
 /*
  * ceilingstat/floorstat:
@@ -131,7 +131,7 @@ typedef struct
 	short lotag, hitag, extra;
 } spritetype;
 
-#pragma pack()
+#pragma pack off
 
 EXTERN sectortype sector[MAXSECTORS];
 EXTERN walltype wall[MAXWALLS];
@@ -219,13 +219,13 @@ SPRITE VARIABLES:
 	EXTERN short nextspritesect[MAXSPRITES], nextspritestat[MAXSPRITES];
 
 	Example: if the linked lists look like the following:
-		 здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
-		 Ё      Sector lists:               Status lists:               Ё
-		 цдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢
-		 Ё  Sector0:  4, 5, 8             Status0:  2, 0, 8             Ё
-		 Ё  Sector1:  16, 2, 0, 7         Status1:  4, 5, 16, 7, 3, 9   Ё
-		 Ё  Sector2:  3, 9                                              Ё
-		 юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+		 О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫д©
+		 О©╫      Sector lists:               Status lists:               О©╫
+		 О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫д╢
+		 О©╫  Sector0:  4, 5, 8             Status0:  2, 0, 8             О©╫
+		 О©╫  Sector1:  16, 2, 0, 7         Status1:  4, 5, 16, 7, 3, 9   О©╫
+		 О©╫  Sector2:  3, 9                                              О©╫
+		 О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	Notice that each number listed above is shown exactly once on both the
 		left and right side.  This is because any sprite that exists must
 		be in some sector, and must have some kind of status that you define.
